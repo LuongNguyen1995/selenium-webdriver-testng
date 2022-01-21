@@ -20,7 +20,7 @@ public class Topic_01_Template {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
-
+ 
 	@Test
 	public void TC_01() {
 		
