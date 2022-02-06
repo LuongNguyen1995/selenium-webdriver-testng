@@ -25,115 +25,157 @@ public class Topic_04_Browser_Part_1 {
 		System.setProperty("webdriver.gecko.driver", projectPath + "\\browserDrivers\\geckodriver.exe");
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
 	}
  
 	@Test
-	public void TC_01_Url() {
+	public void TC_01_Browser() {
 		
+		//Phần nào hay sử dụng thì đánh dấu //** , ít sử dụng thì đánh dấu //*
+		
+		//Các hàm/method để thao tác vs Browser là thông qua biến driver
 		//Mở ra 1 Url
-		driver.get("http://live.techpanda.org/"); 
+		driver.get("https://www.w3schools.com/"); //**
 		
-		//Click vào My Account ở dưới footer
-		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+		driver.get("https://www.facebook.com/");
 		
-		String loginPageUrl = driver.getCurrentUrl();
 		
-		Assert.assertEquals(loginPageUrl, "http://live.techpanda.org/index.php/customer/account/login/");
+		//Đóng browser
+		driver.quit(); //đóng browser //**
 		
-		//Click vào Create an account
-		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+		driver.close(); //đóng browser nếu chỉ 1 tab, đóng tab đang mở nếu có nhiều tab//bài học xử lí window,tabs //*
 		
-		//Verify Url
-		String registerPageUrl = driver.getCurrentUrl();
-		Assert.assertEquals(registerPageUrl, "http://live.techpanda.org/index.php/customer/account/create/");
+		// Tìm 1 element trên page
+		// trả vè data type là WebElement
+		WebElement emailTextbox = driver.findElement(By.id("email")); //**
 		
-	}
-
-	@Test
-	public void TC_02_Title() {
-		//Mở ra 1 Url
-		driver.get("http://live.techpanda.org/"); 
-				
-		//Click vào My Account ở dưới footer
-		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
-						
-		//Verify Title
-		String titleLogin = driver.getTitle();
-		Assert.assertEquals(titleLogin,"Customer Login");
+		//TÌm nhiều hơn 1 element trên page
+		//Trả về data type là List <WebElement>
+		driver.findElements(By.xpath("//a")); //**
 		
-		//Click vào Create an account
-		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+		//Trả về Url của page hiện tại
+		String homePageUrl = driver.getCurrentUrl(); //*
+		System.out.println(homePageUrl);
 		
-		//Verify Title
-		String titleCreateAcount = driver.getTitle();
-		Assert.assertEquals(titleCreateAcount, "Create New Customer Account");
+		//Verify dữ liệu này đúng như mong đợi, verify tuyệt đối
+		Assert.assertEquals(homePageUrl, "https://www.w3schools.com/");
 		
-	}
-
-	@Test
-	public void TC_03_Navigation_Back_Forward() {
+		//lấy ra source code của trang hiện tại (HTML/CSS/JS/JQuery/..)
+		//Verify tương đối 1 giá trị nào đó có trong trang
+		String homePageSource = driver.getPageSource();
+		Assert.assertTrue(homePageSource.contains("Learn to Code"));
 		
-		//Mở ra 1 Url
-		driver.get("http://live.techpanda.org/"); 
-				
-		//Click vào My Account ở dưới footer
-		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();	
+		//Lấy ra/trả về title cua Page hiện tại
+		String homePageTitle = driver.getTitle(); //*
+		Assert.assertEquals(homePageTitle, "W3Schools Online Web Tutorials");
 		
-		//Click vào Create an account
-		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+		//WebDriver API - Windows/Tabs
+		//Trả về 1 ID của Tab hiện tại
+		String signUpTabID = driver.getWindowHandle(); //*
 		
-		//Verify Url của register Page
-		String registerPageUrl = driver.getCurrentUrl();
-		Assert.assertEquals(registerPageUrl, "http://live.techpanda.org/index.php/customer/account/create/");
+		//Trả về ID của tất cả các tab đang có (n)
+		Set<String> allTabID = driver.getWindowHandles(); //*
 		
-		//back về trang trước
+		//Xử lí Cookie (Framework)
+		driver.manage().getCookies(); //*
+		
+		//Lấy log của browser ra
+		//driver.manage().logs()
+		
+		//Time của việc findElement
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); //**
+		
+		//Time page được load xong, ít dùng
+		driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+		
+		//Time để cho 1 đoạn async Script được thực thi thành công (Javascript Excutor), ít dùng
+		driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+		
+		//Fullscreen Browser (F11)
+		driver.manage().window().fullscreen();
+		
+		//End User hay dùng maximize, mở rộng web
+		driver.manage().window().maximize(); //*
+		
+		//Test GUI
+		
+		//Lấy ra vị trí của browser so với độ phân giải màn hình
+		Point browserPosition = driver.manage().window().getPosition();
+		
+		//Set vị trí của browser tại điểm 0 x 250
+		driver.manage().window().setPosition(new Point(0, 250));
+		
+		//Lấy ra chiều rộng/chiều cao của browser
+		Dimension browserSize = driver.manage().window().getSize();
+		
+		//Set browser mở với kích thước nào
+		//Test responsive
+		driver.manage().window().setSize(new Dimension(1366, 768));
+		driver.manage().window().setSize(new Dimension(1920, 1080));
+		
+		
+		//Quay lại trang trước đó
 		driver.navigate().back();
 		
-		
-		//Verify Url của trang login
-		String loginPageUrl = driver.getCurrentUrl();		
-		Assert.assertEquals(loginPageUrl, "http://live.techpanda.org/index.php/customer/account/login/");		
-		
-		//Forward tới trang register
+		//Chuyển tiếp tới trang trước đó
 		driver.navigate().forward();
-
-		//verify title của trang login
-		String titleCreateAcount = driver.getTitle();
-		Assert.assertEquals(titleCreateAcount, "Create New Customer Account");		
-	}
-
-	private void sleepInSecond(int i) {
-		// TODO Auto-generated method stub
+		
+		//Tải lại trang
+		driver.navigate().refresh();
+		
+		
+		driver.navigate().to("https://www.w3schools.com/");
+		
+		//WebDriver API - Alert / Authentication Alert
+		driver.switchTo().alert(); //**
+		
+		//WebDriver API - Frame/Iframe
+		driver.switchTo().frame(1); //**
+		
+		//WebDriver API - Windows/Tabs
+		driver.switchTo().window(""); //**
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//không nên lưu thành 1 biến - tương tác trực tiếp luôn (khi dùng duy nhất 1 lần)
+		List<WebElement> links = driver.findElements(By.id("email"));
+		
+		// Nên lưu thành 1 biến - tương tác sử dụng lại nhiều lần;
+		WebElement emailTextbox = driver.findElement(By.id("email"));
+		emailTextbox.clear();
+		emailTextbox.sendKeys("");
+		emailTextbox.getAttribute("value");
 		
 	}
 
 	@Test
-	public void TC_04_Page_Source_Code() {
-		//Mở ra 1 Url
-		driver.get("http://live.techpanda.org/"); 
-				
-		//Click vào My Account ở dưới footer
-		driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();	
+	public void TC_02_Element() {
+		//Các hàm/method để thao tác vs element là thông qua biến driver
 		
-		//Verify Login page chứa text Login or Create an Account
-		String loginPageSource = driver.getPageSource();
-		Assert.assertTrue(loginPageSource.contains("Login or Create an Account"));	
 		
-		//Click vào Create an account
-		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
 		
-		//Verify register Page chứa text Create an Account
-		String registerPageSource = driver.getPageSource();
-		Assert.assertTrue(registerPageSource.contains("Create an Account"));	
-				
+		
 	}
-	
-	
+
+	@Test
+	public void TC_03() {
+		
+	}
+
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
 	}
+	
 	public void sleepInSecon (long second) {
 		try {
 			Thread.sleep( second * 1000);
@@ -143,5 +185,4 @@ public class Topic_04_Browser_Part_1 {
 		}
 		
 	}
-	
 }

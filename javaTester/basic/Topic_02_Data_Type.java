@@ -3,9 +3,14 @@ package basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 public class Topic_02_Data_Type {
 
-	public static void main(String[] args) {
+	WebDriver driver;
+	public  void main(String[] args) {
 		// 2 loại kiểu dữ liệu
 		
 		// kiểu nguyên thủy (primitive Type)
@@ -43,6 +48,9 @@ public class Topic_02_Data_Type {
 		//class
 		Topic_02_Data_Type topic = new Topic_02_Data_Type();
 		
+		//Interface
+		WebDriver driver;
+		
 		
 		//collection : List/ set/queue
 		
@@ -53,6 +61,9 @@ public class Topic_02_Data_Type {
 		System.out.println(name);
 		String cityName = new String("Ha Noi");
 
+		WebElement emailTextbox = this.driver.findElement(By.cssSelector(""));
+		
+		List<WebElement> checkboxes = driver.findElements(By.tagName("input"));
 	}
 
 }
