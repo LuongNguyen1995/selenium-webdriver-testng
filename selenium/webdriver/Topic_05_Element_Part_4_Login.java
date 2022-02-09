@@ -166,7 +166,7 @@ public class Topic_05_Element_Part_4_Login {
 	public void sleepInSecond(long second) {
 		try {
 			Thread.sleep(second * 1000);
-		} catch (InterruptedExcepton e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 

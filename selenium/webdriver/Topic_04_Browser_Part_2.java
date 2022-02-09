@@ -138,7 +138,7 @@ public class Topic_04_Browser_Part_2 {
 		try {
 			Thread.sleep( second * 1000);
 		}
-		catch(InterruptedExcepton e){
+		catch(InterruptedException e){
 			e.printStackTrace();
 		}
 		
