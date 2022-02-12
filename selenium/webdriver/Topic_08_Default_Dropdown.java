@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 
 import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
 
-public class Topic_07_Default_Dropdown {
+public class Topic_08_Default_Dropdown {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 

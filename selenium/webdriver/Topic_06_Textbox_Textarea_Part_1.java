@@ -10,7 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_06_Textbox_Textarea {
+public class Topic_06_Textbox_Textarea_Part_1 {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 
@@ -133,15 +133,6 @@ public class Topic_06_Textbox_Textarea {
 		//Verify
 		Assert.assertEquals(driver.findElement(By.id("immigration_number")).getAttribute("value"), "31195855");
 		Assert.assertEquals(driver.findElement(By.id("immigration_comments")).getAttribute("value"), "Steven's\nPassport\nID");
-		
-	}
-
-	@Test
-	public void TC_02() {
-	}
-
-	@Test
-	public void TC_03() {
 		
 	}
 
