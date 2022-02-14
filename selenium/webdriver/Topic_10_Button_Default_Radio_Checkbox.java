@@ -2,11 +2,13 @@ package webdriver;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.Color;
 import org.testng.Assert;
@@ -113,9 +115,100 @@ public class Topic_10_Button_Default_Radio_Checkbox {
 
 	@Test
 	public void TC_03_Default_Checkbox() {
+		driver.get("https://demos.telerik.com/kendo-ui/checkbox/index");
+		
+		By luggageCheckbox = By.xpath("//label[text()='Luggage compartment cover']/preceding-sibling::input");
+		By heatedCheckbox = By.xpath("//label[text()='Heated front and rear seats']/preceding-sibling::input");
+		By towbarCheckbox  = By.xpath("//label[text()='Towbar preparation']/preceding-sibling::input");	
+		By leatherCheckbox  = By.xpath("//label[text()='Leather trim']/preceding-sibling::input");	
+		
+		//Select
+		//Nếu chưa chọn thì click chọn
+		checkToCheckbox(luggageCheckbox);
+		checkToCheckbox(heatedCheckbox);
+		
+		//Verify Selected
+		Assert.assertTrue(isElementSelected(luggageCheckbox));
+		Assert.assertTrue(isElementSelected(heatedCheckbox));
+		Assert.assertTrue(isElementSelected(leatherCheckbox));
+		
+		//Verify disable
+		Assert.assertFalse(isElementEnable(towbarCheckbox));
+		Assert.assertFalse(isElementEnable(leatherCheckbox));
+		
+		//De-Select
+		//Nếu chọn thì click bỏ chọn
+		unCheckToCheckbox(luggageCheckbox);
+		unCheckToCheckbox(heatedCheckbox);
+		
+		//Verify De-Selected
+		Assert.assertFalse(isElementSelected(luggageCheckbox));
+		Assert.assertFalse(isElementSelected(heatedCheckbox));
+		Assert.assertFalse(isElementSelected(towbarCheckbox));
+		
 		
 	}
-
+	
+	@Test
+	public void TC_04_Multiple_Checkbox() {
+		driver.get("https://automationfc.github.io/multiple-fields/");
+		
+		List<WebElement> checkboxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
+		System.out.println("Checkbox size = "+ checkboxes.size());
+		
+		//Action - select
+		for (WebElement checkbox : checkboxes) {
+			if (!checkbox.isSelected()) {
+				checkbox.click();
+			}
+		}
+		
+		//Verify - selected
+		for (WebElement checkbox : checkboxes) {
+			Assert.assertTrue(checkbox.isSelected());
+		}
+		
+		//Action - de-select
+		for (WebElement checkbox : checkboxes) {
+			if (checkbox.isSelected()) {
+				checkbox.click();
+			}
+		}
+		
+		//Verify - de-selected
+		for (WebElement checkbox : checkboxes) {
+			Assert.assertFalse(checkbox.isSelected());
+		}
+	}
+	
+	public void checkToCheckbox(By by) {
+		if(!driver.findElement(by).isSelected()){
+			driver.findElement(by).click();
+		}
+	}
+	
+	public void unCheckToCheckbox(By by) {
+		if(driver.findElement(by).isSelected()){
+			driver.findElement(by).click();
+		}
+	}
+	
+	public boolean isElementSelected(By by) {
+		if (driver.findElement(by).isSelected()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isElementEnable(By by) {
+		if (driver.findElement(by).isEnabled()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
