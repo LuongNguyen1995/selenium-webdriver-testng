@@ -16,7 +16,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_10_Button_Default_Radio_Checkbox {
+public class Topic_10_Button_Default_Custom_Radio_Checkbox {
 	WebDriver driver;
 	JavascriptExecutor jsExecutor;
 	String projectPath = System.getProperty("user.dir");
@@ -31,7 +31,7 @@ public class Topic_10_Button_Default_Radio_Checkbox {
 		driver.manage().window().maximize();
 	}
  
-	@Test
+	//@Test
 	public void TC_01_Button() {
 		driver.get("https://www.fahasa.com/customer/account/create?attempt=1");
 		driver.findElement(By.xpath("//ul[@class='popup-login-tab']//a[text()='Đăng nhập']")).click();
@@ -76,7 +76,7 @@ public class Topic_10_Button_Default_Radio_Checkbox {
 	
 	}
 
-	@Test
+	//@Test
 	public void TC_02_Default_Radio() {
 		driver.get("https://demos.telerik.com/kendo-ui/radiobutton/index");
 		
@@ -113,7 +113,7 @@ public class Topic_10_Button_Default_Radio_Checkbox {
 		
 	}
 
-	@Test
+	//@Test
 	public void TC_03_Default_Checkbox() {
 		driver.get("https://demos.telerik.com/kendo-ui/checkbox/index");
 		
@@ -149,7 +149,7 @@ public class Topic_10_Button_Default_Radio_Checkbox {
 		
 	}
 	
-	@Test
+	//@Test
 	public void TC_04_Multiple_Checkbox() {
 		driver.get("https://automationfc.github.io/multiple-fields/");
 		
@@ -181,6 +181,115 @@ public class Topic_10_Button_Default_Radio_Checkbox {
 		}
 	}
 	
+	//@Test
+	public void TC_05_Custom_Radio() {
+		driver.get("https://material.angular.io/components/radio/examples");
+		
+		//Case 1 : Dùng thẻ input : 
+		//Selenium click : -> ElementNotInteractableException
+		//isSelected() => work
+		//Default Radio/Checkbox
+		By winterCheckboxInput = By.xpath("//input[@value='Winter']");
+		
+		//Case 2 : Dùng thẻ span
+		//Selenium click : -> work
+		//isSelected() => NOT work
+		By winterCheckboxSpan = By.xpath("//input[@value='Winter']/preceding-sibling::span[@class='mat-radio-outer-circle']");
+		
+		
+		//Case 3 : Dùng thẻ span để click() & Dùng thẻ input - isSelected()
+		//1 element phải defind 2 locator
+		//Dễ bị nhầm lẫn : Team member họ dùng -> Hiểu nhầm
+		//Bảo trì : Code nhiều -> NOT OK
+		
+		
+		//Case 4 : Dùng thẻ input
+		//Javascript - click (không quan tâm element ẩn/hiện)
+		//isSelected - verify
+		
+		clickByJavascript(winterCheckboxInput);
+		sleepInSecond(2);
+		//Verify : isSelected()
+		Assert.assertTrue(driver.findElement(winterCheckboxInput).isSelected());
+		
+	}
+	
+	//@Test
+	public void TC_06_Custom_Checkbox() {
+		driver.get("https://material.angular.io/components/checkbox/examples");
+		
+		By checkedCheckbox = By.xpath("//span[text()='Checked']/preceding-sibling::span/input");
+		By indeterminateCheckbox = By.xpath("//span[text()='Indeterminate']/preceding-sibling::span/input");
+
+		//Chọn
+		clickByJavascript(checkedCheckbox);
+		sleepInSecond(1);
+
+		clickByJavascript(indeterminateCheckbox);
+		sleepInSecond(1);
+
+		Assert.assertTrue(driver.findElement(checkedCheckbox).isSelected());
+		Assert.assertTrue(driver.findElement(indeterminateCheckbox).isSelected());
+
+		//Bỏ chọn
+		clickByJavascript(checkedCheckbox);
+		sleepInSecond(1);
+
+		clickByJavascript(indeterminateCheckbox);
+		sleepInSecond(1);
+
+		Assert.assertFalse(driver.findElement(checkedCheckbox).isSelected());
+		Assert.assertFalse(driver.findElement(indeterminateCheckbox).isSelected());		
+		
+	}
+	
+	//@Test
+	public void TC_07_Custom_Radio() {
+		driver.get("https://tiemchungcovid19.gov.vn/portal/register-person");
+		By dangKyBanThanRadio = By.xpath("//div[text()='Đăng ký bản thân']/preceding-sibling::div/input");
+		By dangKyChoNguoiThanRadio = By.xpath("//div[text()='Đăng ký cho người thân']/preceding-sibling::div/input");
+		
+		clickByJavascript(dangKyChoNguoiThanRadio);
+		sleepInSecond(1);
+		Assert.assertTrue(driver.findElement(dangKyChoNguoiThanRadio).isSelected());
+		Assert.assertTrue(driver.findElement(By.xpath("//input[@formcontrolname='registerFullname']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//input[@formcontrolname='registerPhoneNumber']")).isDisplayed());
+		
+		clickByJavascript(dangKyBanThanRadio);
+		sleepInSecond(1);
+		Assert.assertTrue(driver.findElement(dangKyBanThanRadio).isSelected());
+		//Nếu số lượng element là 0 thì sẽ trả về kết quả true, assertFalse không sài được
+		Assert.assertEquals(driver.findElements(By.xpath("//input[@formcontrolname='registerFullname']")).size(), 0);
+		Assert.assertEquals(driver.findElements(By.xpath("//input[@formcontrolname='registerPhoneNumber']")).size(), 0);
+	}
+	
+	@Test
+	public void TC_08_Custom_Radio_Checkbox_Goolge_Doc() {
+		driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+		
+		By haiPhongCityRadio = By.xpath("//div[@aria-label='Hải Phòng']");
+		By quangNamCityCheckbox = By.xpath("//div[@aria-label='Quảng Nam']");
+		
+		driver.findElement(haiPhongCityRadio).click();
+		driver.findElement(quangNamCityCheckbox).click();
+		sleepInSecond(2);
+		
+		Assert.assertEquals(driver.findElement(haiPhongCityRadio).getAttribute("aria-checked"), "false");	
+		Assert.assertEquals(driver.findElement(quangNamCityCheckbox).getAttribute("aria-checked"), "false");
+
+		//C1 : Verify : Dựa trên sự thay đổi trạng thái của element
+		Assert.assertEquals(driver.findElement(haiPhongCityRadio).getAttribute("aria-checked"), "true");	
+		Assert.assertEquals(driver.findElement(quangNamCityCheckbox).getAttribute("aria-checked"), "true");
+
+		//C2 : Dùng isDisplay thì phải thêm điều kiện
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@aria-label='Hải Phòng'] and aria-checked = true")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[@aria-label='Quảng Nam'] and aria-checked = true")).isDisplayed());
+	}
+	
+	public void clickByJavascript(By by) {
+		jsExecutor.executeScript("arguments[0].click()", driver.findElement(by));
+	}
+	
 	public void checkToCheckbox(By by) {
 		if(!driver.findElement(by).isSelected()){
 			driver.findElement(by).click();
@@ -192,7 +301,7 @@ public class Topic_10_Button_Default_Radio_Checkbox {
 			driver.findElement(by).click();
 		}
 	}
-	
+
 	public boolean isElementSelected(By by) {
 		if (driver.findElement(by).isSelected()) {
 			return true;

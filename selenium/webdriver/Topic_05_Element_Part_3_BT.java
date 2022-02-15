@@ -74,17 +74,16 @@ public class Topic_05_Element_Part_3_BT {
 		}
 
 		
+
+		//Kiểm tra User5 không hiển thị trên trang 
+		//Đếm số lượng User 5, nếu = 0 thì là k hiển thị và ngược lại
+		int countUser5 = driver.findElements(By.name("User5")).size();
 		
-		
-		//Kiểm tra User5 không hiển thị trên trang (Chưa làm được)
-		WebElement nameUser5 =  driver.findElement(By.name("User5"));
-		Assert.assertFalse(nameUser5.isDisplayed());
-		//in ra màn hình
-		if(nameUser5.isDisplayed()) {
-			System.out.println("Element is displayed");
+		if(countUser5 ==0) {
+			System.out.println("Element is not displayed");
 		}
 		else {
-		System.out.println("Element is not displayed");	
+			System.out.println("Element is displayed");	
 		}
 	}
 		
