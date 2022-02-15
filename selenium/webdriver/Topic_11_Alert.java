@@ -44,7 +44,7 @@ public class Topic_11_Alert {
 		driver.findElement(By.name("btnLogin")).click();
 		
 		//Chờ cho alert xuất hiện, thấy xuất hiện thì switch qua luôn -> Chính xác hơn cách làm bên dưới 
-		alert = explicitWait.until(ExpectedConditions.alertIsPresent())
+		alert = explicitWait.until(ExpectedConditions.alertIsPresent());
 		sleepInSecond(3);
 		Assert.assertEquals(alert.getText(), "User or Password is not valid");
 		alert.accept();
