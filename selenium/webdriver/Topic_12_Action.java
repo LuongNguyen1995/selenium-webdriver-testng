@@ -192,7 +192,7 @@ public class Topic_12_Action {
 		driver.get("https://automationfc.github.io/drag-drop-html5/");
 		
 		String columnACss = "#column-a";
-		String columnBCss = "#column-a";
+		String columnBCss = "#column-b";
 		
 		String dragDropHelperContent = getContentFile(dragDropHelperPath);
 		System.out.println(dragDropHelperContent);
@@ -209,7 +209,7 @@ public class Topic_12_Action {
 		sleepInSecond(5);
 	}
 	
-	@Test
+	//@Test
 	public void TC_09_Drag_Drop_HTML5_Xpath() throws AWTException {
 		driver.get("https://automationfc.github.io/drag-drop-html5/");
 		
