@@ -134,15 +134,6 @@ public class Topic_13_Fixed_Popup {
 		driver.findElement(By.cssSelector("form#formTrack button[type='submit']")).click();
 		sleepInSecond(5);
 	}
-	
-	@Test
-	public void TC_02_Random_Popup_In_DOM() {
-	}
-
-	@Test
-	public void TC_03_Random_Popup_Not_In_DOM() {
-		
-	}
 
 	@AfterClass
 	public void afterClass() {
