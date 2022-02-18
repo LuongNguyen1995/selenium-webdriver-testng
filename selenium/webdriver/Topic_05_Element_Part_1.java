@@ -163,7 +163,7 @@ public class Topic_05_Element_Part_1 {
 		try {
 			Thread.sleep( second * 1000);
 		}
-		catch(InterruptedExcepton e){
+		catch(InterruptedException e){
 			e.printStackTrace();
 		}
 		

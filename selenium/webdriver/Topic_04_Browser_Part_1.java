@@ -150,7 +150,7 @@ public class Topic_04_Browser_Part_1 {
 		List<WebElement> links = driver.findElements(By.id("email"));
 		
 		// Nên lưu thành 1 biến - tương tác sử dụng lại nhiều lần;
-		WebElement emailTextbox = driver.findElement(By.id("email"));
+		//WebElement emailTextbox = driver.findElement(By.id("email"));
 		emailTextbox.clear();
 		emailTextbox.sendKeys("");
 		emailTextbox.getAttribute("value");
@@ -180,7 +180,7 @@ public class Topic_04_Browser_Part_1 {
 		try {
 			Thread.sleep( second * 1000);
 		}
-		catch(InterruptedExcepton e){
+		catch(InterruptedException e){
 			e.printStackTrace();
 		}
 		
