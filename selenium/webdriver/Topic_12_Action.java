@@ -187,7 +187,7 @@ public class Topic_12_Action {
 		
 	}
 	
-	//@Test
+	@Test
 	public void TC_08_Drag_Drop_HTML5_Css() throws IOException {
 		driver.get("https://automationfc.github.io/drag-drop-html5/");
 		
