@@ -63,7 +63,7 @@ public class Topic_02_Data_Type {
 
 		WebElement emailTextbox = this.driver.findElement(By.cssSelector(""));
 		
-		List<WebElement> checkboxes = driver.findElements(By.tagName("input"));
+		//List<WebElement> checkboxes = driver.findElements(By.tagName("input"));
 	}
 
 }
