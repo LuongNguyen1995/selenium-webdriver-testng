@@ -59,14 +59,13 @@ public class Topic_07_Textbox_Textarea_Part_2 {
 	@Test
 	public void TC_01_Register() {
 		driver.findElement(By.xpath("//a[text()='here']")).click();
-		
+
 		driver.findElement(By.name("emailid")).sendKeys(email);
 		driver.findElement(By.name("btnLogin")).click();
 		userID = driver.findElement(By.xpath("//td[text()='User ID :']/following-sibling::td")).getText();
 		userPassword = driver.findElement(By.xpath("//td[text()='Password :']/following-sibling::td")).getText();
-		
-		
-}
+
+	}
 	
 	@Test
 	public void TC_02_Login() {
