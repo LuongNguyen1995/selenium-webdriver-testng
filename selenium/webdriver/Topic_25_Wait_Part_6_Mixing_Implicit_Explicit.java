@@ -1,6 +1,7 @@
 package webdriver;
 
 import java.time.Duration;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -124,7 +125,7 @@ public class Topic_25_Wait_Part_6_Mixing_Implicit_Explicit {
 	
 	public String getDateTimeNow() {
 		Date date = new Date();
-		return Date.toString();
+		return date.toString();
 	}
 	
 	@AfterClass
